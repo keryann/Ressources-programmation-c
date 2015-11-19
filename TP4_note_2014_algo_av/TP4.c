@@ -5,29 +5,39 @@
 #include <math.h>
 #include "liste_ptr.h"
 
+int testAffiche() {
+    int val, pui, boo;
+    valeur_elt(&val, &pui);
+    if(val==0)
+        boo=1;
+    else if(pui==0) // pas de x puisque x^0=1
+        printf("%i", val);
+    else if (pui==1) //pas de puissance à afficher x^1=x
+        printf("%ix", val);
+    else
+        printf("%ix%i",val, pui);
+    if(val==0 && pui==0)
+        boo=1;
+    else
+        boo=0;
+    suivant();
+    return boo;
+}
 
 void afficher() {
 /* Affiche les valeurs de la liste */
-	int val, pui;
+	int boo;
 
 	if(liste_vide())
 		printf("La liste est vide\n");
 	else {
 		printf("\nLe polynome est ");
 		en_tete();
-		valeur_elt(&val, &pui);
-        printf("%ix%i",val, pui);
-        suivant();
-
+		boo=testAffiche();
 		while(!hors_liste()) {
-			valeur_elt(&val, &pui);
-			if(pui==0) // pas de x puisque x^0=1
-                printf(" + %i", val);
-            else if (pui==1) //pas de puissance à afficher x^1=x
-                printf(" + %ix", val);
-            else
-                printf(" + %ix%i",val, pui);
-			suivant();
+            if(!liste_vide() && boo==0)
+                printf(" + ");
+			boo=testAffiche();
 		}
 		printf("\n");
 	}
@@ -46,9 +56,9 @@ void saisie() {
         scanf("%i%i", &val, &pui);
     }
 }
-
+/*
 void parite() {
-    /* On calcule si le polynome est pair ou impair*/
+    //On calcule si le polynome est pair ou impair
     int resa, resb, val, pui, i;
 
     en_tete();
@@ -77,6 +87,33 @@ void parite() {
         }
     }
     else if (resa-resb==0)
+        printf("\nIl s'agit d'un polynome pair\n");
+    else
+        printf("\nIl s'agit d'un polynome impair\n");
+}
+*/
+
+/*
+** Modif pproposée par Pierre Champion : Drakirus on github
+*/
+
+void parite() {
+    /* On calcule si le polynome est pair ou impair*/
+    int paire,val, pui;
+
+    en_tete();
+    valeur_elt(&val, &pui);
+    suivant();
+
+        paire = 0;
+        paire += pui;
+
+    while(!hors_liste()) {
+        valeur_elt(&val, &pui);
+        suivant();
+        paire += pui;
+    }
+    if (paire%2==0)
         printf("\nIl s'agit d'un polynome pair\n");
     else
         printf("\nIl s'agit d'un polynome impair\n");
