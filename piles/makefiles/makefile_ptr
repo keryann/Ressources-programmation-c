@@ -1,0 +1,9 @@
+CC = gcc
+OBJ = exo2.o pile_ptr.o
+CFLAGS = -Wall -lm
+exo2: $(OBJ)
+	$(CC) $(CFLLAGS) $(OBJ) -o exo2
+exo2.o: exo2.c
+	$(CC) $(CFLAGS) -c exo2.c
+pile_ptr.o: pile_ptr.c
+	$(CC) $(CFLAGS) -c pile_ptr.c
